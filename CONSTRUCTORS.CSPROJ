@@ -85,6 +85,7 @@
     <Compile Include="BankAccount.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BankTransaction.cs" />
     <Compile Include="CreateAccount.cs">
       <SubType>Code</SubType>
     </Compile>

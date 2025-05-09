@@ -1,10 +1,18 @@
 
+using System;
+using System.Collections;
+
 class BankAccount 
 {
-	private long accNo;
+    private long accNo;
     private decimal accBal;
     private AccountType accType;
+    private Queue tranQueue = new Queue();
     private static long nextNumber = 123;
+
+    private readonly decimal amount;
+    private readonly DateTime when;
+
 
     public long Number() => accNo;
     public decimal Balance() => accBal;
@@ -48,20 +56,31 @@ class BankAccount
     public bool Withdraw(decimal amount)
     {
         bool sufficientFunds = accBal >= amount;
-        if (sufficientFunds) {
+        if (sufficientFunds)
+        {
             accBal -= amount;
+            BankTransaction tran = new BankTransaction(-amount);
+            tranQueue.Enqueue(tran);
         }
         return sufficientFunds;
     }
-    
+
+
     public decimal Deposit(decimal amount)
     {
         accBal += amount;
+        BankTransaction tran = new BankTransaction(amount);
+        tranQueue.Enqueue(tran);
         return accBal;
     }
-    
+
     private static long NextNumber()
     {
         return nextNumber++;
+    }
+
+    public Queue Transactions()
+    {
+        return tranQueue;
     }
 }
